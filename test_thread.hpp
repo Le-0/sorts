@@ -16,8 +16,8 @@ enum class sequence_type {
 	reversed
 };
 
-void test_thread(const testing_signature sort, const unsigned short times, const unsigned long size,
-				const std::string filename, const sequence_type seq_type = sequence_type::random)
+void test_thread(const testing_signature sort, const unsigned short& times, const unsigned long& size,
+				const std::string& filename, const sequence_type seq_type) 
 {
 	std::ofstream out{filename};
 	std::mt19937 generator(std::chrono::system_clock::now().time_since_epoch().count());

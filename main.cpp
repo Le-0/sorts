@@ -6,10 +6,13 @@
 
 #include "sorts.hpp"
 #include "TimeTest.hpp"
-#include "testing_thread.hpp"
+#include "test_thread.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
+using namespace std::placeholders;
+
+#include <iostream>
 
 int main(int argc, char** argv)
 {
@@ -26,19 +29,18 @@ int main(int argc, char** argv)
 	sorts[9] = { lsd_sort<std::vector<int>::iterator>, "lsd_sort"s };
 	sorts[10] = { bitonic_sort<std::vector<int>::iterator>, "bitonic_sort"s };
 	
-	//test_thread(std::get<0>(sorts[0]), 10, 100000, "./test.txt"s);
-
-
+	
 	std::vector<std::thread> threads;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
-		for(auto size = 100; size <= 1000000; size *= 10) {
+		for(auto size = 100; size <= 1000; size *= 10) {
 			for(const auto & it : sorts) {
-				threads.emplace_back(std::get<0>(it), 100, size, "./results/"s + std::get<1>(it) + "_"s + std::to_string(size));
+				threads.push_back(std::thread{&test_thread, std::get<0>(it), 100, size,
+					       	"./results/"s + std::get<1>(it) + "_"s + std::to_string(size), static_cast<sequence_type>(type)});
 			}
 		}
 	}
-	for(const auto & thread : threads)
-		thread.join();
-	
+	for(auto & thread : threads)
+		if(thread.joinable())
+	            thread.join();
 	return 0;
 }
