@@ -3,6 +3,7 @@
 #include <functional>
 #include <iterator>
 #include <cstring>
+#include <memory>
 
 
 template<class Iterator, class Comporator>

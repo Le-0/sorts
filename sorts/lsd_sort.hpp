@@ -3,6 +3,7 @@
 #include <iterator>
 #include <type_traits>
 #include <cstring>
+#include <memory>
 
 template<class T, class = typename std::enable_if<std::is_integral<T>::value>::type>
 T digit(T n, T k, T N, T M)

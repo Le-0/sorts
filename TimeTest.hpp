@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+#include <utility>
+#include <chrono>
+
 template<typename target_t>
 class TimeTest
 {
@@ -10,13 +14,13 @@ public:
 	template<typename ...Args>
 	auto operator()(Args&&... args)
 	{
-		auto start = std::chrono::high_resolution_clock::now();
+		std::vector<std::chrono::time_point<std::chrono::high_resolution_clock>> time_points(times + 1);
 		for(auto i = 0; i < times; ++i) {
+			time_points[i] = std::chrono::high_resolution_clock::now();
 			target(std::forward<Args>(args)...);
 		}
-		return std::chrono::duration_cast<std::chrono::milliseconds>(
-			(std::chrono::high_resolution_clock::now() - start) / times
-			).count();
+		time_points[times] = std::chrono::high_resolution_clock::now();
+		return time_points;
 	}
 	TimeTest() = delete;
 	~TimeTest() = default;

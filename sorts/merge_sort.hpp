@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <iterator>
+#include <memory>
 
 template<class Iterator, class Comporator>
 void merge_sort(Iterator begin, Iterator end, Comporator comp)
