@@ -21,7 +21,7 @@ std::string seqttos(sequence_type type)
 		case sequence_type::sorted:
 			return "sorted"s;
 		case sequence_type::reversed:
-			return "reversed";
+			return "reversed"s;
 		default:
 			throw std::invalid_argument{"argument is not a sequence_type variable"};
 	}
