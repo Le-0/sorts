@@ -11,7 +11,6 @@
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
-using namespace std::placeholders;
 
 std::string seqttos(sequence_type type)
 {
@@ -45,7 +44,7 @@ int main(int argc, char** argv)
 	
 	std::vector<std::thread> threads;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
-		for(auto size = 100; size <= 1000; size *= 10) {
+		for(auto size = 100; size <= 100000; size *= 10) {
 			for(const auto & it : sorts) {
 				threads.push_back(std::thread{&test_thread, std::get<0>(it), 100, size,
 				       	"./results/"s + std::get<1>(it) + "_"s + std::to_string(size) + "_"s + seqttos(static_cast<sequence_type>(type)),
