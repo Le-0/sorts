@@ -3,6 +3,7 @@
 #include <array>
 #include <vector>
 #include <thread>
+#include <exception>
 
 #include "sorts.hpp"
 #include "TimeTest.hpp"
@@ -12,7 +13,19 @@ using testing_signature = std::function<void(std::vector<int>::iterator, std::ve
 using namespace std::literals;
 using namespace std::placeholders;
 
-#include <iostream>
+std::string seqttos(sequence_type type)
+{
+	switch(type) {
+		case sequence_type::random:
+			return "random"s;
+		case sequence_type::sorted:
+			return "sorted"s;
+		case sequence_type::reversed:
+			return "reversed";
+		default:
+			throw std::invalid_argument{"argument is not a sequence_type variable"};
+	}
+}
 
 int main(int argc, char** argv)
 {
@@ -35,7 +48,8 @@ int main(int argc, char** argv)
 		for(auto size = 100; size <= 1000; size *= 10) {
 			for(const auto & it : sorts) {
 				threads.push_back(std::thread{&test_thread, std::get<0>(it), 100, size,
-					       	"./results/"s + std::get<1>(it) + "_"s + std::to_string(size), static_cast<sequence_type>(type)});
+				       	"./results/"s + std::get<1>(it) + "_"s + std::to_string(size) + "_"s + seqttos(static_cast<sequence_type>(type)),
+				       	static_cast<sequence_type>(type)});
 			}
 		}
 	}

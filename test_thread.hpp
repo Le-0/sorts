@@ -16,6 +16,16 @@ enum class sequence_type {
 	reversed
 };
 
+std::vector<std::chrono::microseconds> tptod(std::vector<std::chrono::time_point<std::chrono::high_resolution_clock>> time_points)
+{
+	std::vector<std::chrono::microseconds> durations(time_points.size() - 1);
+	for(int i = 0; i < durations.size(); ++i) {
+		durations[i] = std::chrono::duration_cast<std::chrono::microseconds>(
+			       time_points[i + 1] - time_points[i]);	
+	}
+	return durations;
+}
+
 void test_thread(const testing_signature sort, const unsigned short& times, const unsigned long& size,
 				const std::string& filename, const sequence_type seq_type) 
 {
@@ -30,16 +40,18 @@ void test_thread(const testing_signature sort, const unsigned short& times, cons
 	if(seq_type == sequence_type::reversed)
 		std::sort(sequence.rbegin(), sequence.rend());
 
-	std::vector<std::chrono::time_point<std::chrono::high_resolution_clock>> time_points;
-	time_points = TimeTest<testing_signature>(sort, times)(begin(sequence), end(sequence));
+	auto durations = tptod(TimeTest<testing_signature>(sort, times)(begin(sequence), end(sequence)));
 
-	out << std::chrono::duration_cast<std::chrono::microseconds>(
-		(time_points.back() - time_points.front()) / times).count()
-		<< '\n' << std::endl;
+	{
+		auto tmp_durations = durations;
+		auto median = begin(tmp_durations) + tmp_durations.size() / 2;
+		std::nth_element(begin(tmp_durations), median, end(tmp_durations));
+		out << median->count() << '\n' << std::endl;
+	}
 
-	for(auto time_point_it = begin(time_points); time_point_it != end(time_points) - 1; ++time_point_it) {
-		out << std::chrono::duration_cast<std::chrono::microseconds>(
-				*(time_point_it + 1) - *time_point_it).count() << std::endl;
+
+	for(auto duration : durations) {
+		out << duration.count() << std::endl;
 	}
 
 	out.close();
