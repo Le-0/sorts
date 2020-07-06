@@ -8,6 +8,7 @@
 #include "sorts.hpp"
 #include "TimeTest.hpp"
 #include "test_thread.hpp"
+#include "HtmlTable.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
