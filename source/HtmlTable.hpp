@@ -14,14 +14,14 @@ public:
 	}
 	void add_column(std::vector<std::string>&& column)
 	{
-	    if(column.size() < length)
+	    if(column.size() <= length)
 		    table.emplace_back(column);
 		else
 		    throw std::invalid_argument{"column cannot have size more than length"};
 	}
 	friend std::ostream& operator<<(std::ostream& out, const HtmlTable& table)
 	{
-		out << "\n#generated table\n<tr>\n";
+		out << "\n<table>\n<tr>\n";
 		for(const auto & column : table.table)
 			out << "\t<th>" << column[0] << "</th>\n";
 		out << "</tr>\n";
@@ -38,6 +38,7 @@ public:
 			}
 			out << "</tr>\n";
 		}
+		out << "</table>\n";
 		return out;
 
 	}

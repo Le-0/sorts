@@ -8,7 +8,7 @@
 #include "sorts.hpp"
 #include "TimeTest.hpp"
 #include "test_thread.hpp"
-#include "HtmlTable.hpp"
+#include "write_table.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
@@ -42,7 +42,6 @@ int main(int argc, char** argv)
 	sorts[9] = { lsd_sort<std::vector<int>::iterator>, "lsd_sort"s };
 	sorts[10] = { bitonic_sort<std::vector<int>::iterator>, "bitonic_sort"s };
 	
-	
 	std::vector<std::thread> threads;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
 		for(auto size = 100; size <= 100000; size *= 10) {
@@ -56,5 +55,8 @@ int main(int argc, char** argv)
 	for(auto & thread : threads)
 		if(thread.joinable())
 	            thread.join();
+
+	write_table(sorts);
+
 	return 0;
 }
