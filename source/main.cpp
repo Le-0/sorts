@@ -9,23 +9,10 @@
 #include "TimeTest.hpp"
 #include "test_thread.hpp"
 #include "write_table.hpp"
+#include "sequence_type.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
-
-std::string seqttos(sequence_type type)
-{
-	switch(type) {
-		case sequence_type::random:
-			return "random"s;
-		case sequence_type::sorted:
-			return "sorted"s;
-		case sequence_type::reversed:
-			return "reversed"s;
-		default:
-			throw std::invalid_argument{"argument is not a sequence_type variable"};
-	}
-}
 
 int main(int argc, char** argv)
 {
@@ -41,7 +28,7 @@ int main(int argc, char** argv)
 	sorts[8] = { quick_sort<std::vector<int>::iterator>, "quick_sort"s };
 	sorts[9] = { lsd_sort<std::vector<int>::iterator>, "lsd_sort"s };
 	sorts[10] = { bitonic_sort<std::vector<int>::iterator>, "bitonic_sort"s };
-	
+
 	std::vector<std::thread> threads;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
 		for(auto size = 100; size <= 100000; size *= 10) {

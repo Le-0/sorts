@@ -19,6 +19,10 @@ public:
 		else
 		    throw std::invalid_argument{"column cannot have size more than length"};
 	}
+	void clear()
+	{
+		table.clear();
+	}
 	friend std::ostream& operator<<(std::ostream& out, const HtmlTable& table)
 	{
 		out << "\n<table>\n<tr>\n";
@@ -33,7 +37,7 @@ public:
 			        out << "\t<td>" << elem << "</td>\n";
 			    }
 			    catch(std::out_of_range&) {
-			        out << "\t<td></td>\n";
+			        out << "\t<td>-</td>\n";
 			    }
 			}
 			out << "</tr>\n";

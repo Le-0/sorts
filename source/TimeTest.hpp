@@ -2,7 +2,8 @@
 
 #include <vector>
 #include <utility>
-#include <chrono>
+
+#include "getCPUTime.h"
 
 template<typename target_t>
 class TimeTest
@@ -14,12 +15,12 @@ public:
 	template<typename ...Args>
 	auto operator()(Args&&... args)
 	{
-		std::vector<std::chrono::time_point<std::chrono::high_resolution_clock>> time_points(times + 1);
+		std::vector<double> time_points(times + 1);
 		for(auto i = 0; i < times; ++i) {
-			time_points[i] = std::chrono::high_resolution_clock::now();
+			time_points[i] = getCPUTime();
 			target(std::forward<Args>(args)...);
 		}
-		time_points[times] = std::chrono::high_resolution_clock::now();
+		time_points[times] = getCPUTime();
 		return time_points;
 	}
 	TimeTest() = delete;

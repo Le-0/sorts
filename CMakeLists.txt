@@ -5,7 +5,8 @@ project(sorts_comparison)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCE ./source/main.cpp ./source/sorts.hpp ./source/TimeTest.hpp ./source/test_thread.hpp ./source/HtmlTable.hpp)
+set(SOURCE ./source/main.cpp ./source/sorts.hpp ./source/TimeTest.hpp ./source/test_thread.hpp
+	./source/HtmlTable.hpp ./source/getCPUTime.h ./source/sequence_type.hpp ./source/write_table.hpp)
 set(SORTS ./source/sorts/bitonic_sort.hpp ./source/sorts/bubble_sort.hpp
 	./source/sorts/comb_sort.hpp ./source/sorts/gnome_sort.hpp
 	./source/sorts/insertion_sort.hpp ./source/sorts/lsd_sort.hpp
