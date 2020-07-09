@@ -6,6 +6,7 @@
 #include <tuple>
 #include <array>
 #include <functional>
+#include <cmath>
 
 #include "HtmlTable.hpp"
 
@@ -52,7 +53,7 @@ void write_table(const std::array<std::tuple<testing_signature, std::string>, 11
 					std::getline(in, str);
 				if(str.empty())
 					str = "-"s;
-				column[i] = str;	
+				column[i] = std::to_string(static_cast<int>(std::round(std::stod(str))));	
 			}
 			table.add_column(std::move(column));
 		}
