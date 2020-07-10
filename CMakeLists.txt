@@ -4,9 +4,11 @@ project(sorts_comparison)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
 
-set(SOURCE ./source/main.cpp ./source/sorts.hpp ./source/TimeTest.hpp ./source/test_thread.hpp
-	./source/HtmlTable.hpp ./source/getCPUTime.h ./source/sequence_type.hpp ./source/write_table.hpp)
+set(SOURCE ./source/main.cpp ./source/sorts/sorts.hpp ./source/benchmark/TimeTest.hpp ./source/benchmark/test_thread.hpp
+	./source/display/HtmlTable.hpp ./source/display/write_table.hpp ./source/utils/getCPUTime.h ./source/utils/sequence_type.hpp)
 set(SORTS ./source/sorts/bitonic_sort.hpp ./source/sorts/bubble_sort.hpp
 	./source/sorts/comb_sort.hpp ./source/sorts/gnome_sort.hpp
 	./source/sorts/insertion_sort.hpp ./source/sorts/lsd_sort.hpp
@@ -16,8 +18,7 @@ set(EXECUTABLE_OUTPUT_PATH ../bin/)
 
 add_executable(main ${SOURCE} ${SORTS})
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
 target_link_libraries(main Threads::Threads)
 
 file(MAKE_DIRECTORY ./bin/results)
+file(MAKE_DIRECTORY ./bin/data)

@@ -5,11 +5,11 @@
 #include <thread>
 #include <exception>
 
-#include "sorts.hpp"
-#include "TimeTest.hpp"
-#include "test_thread.hpp"
-#include "write_table.hpp"
-#include "sequence_type.hpp"
+#include "sorts/sorts.hpp"
+#include "benchmark/TimeTest.hpp"
+#include "benchmark/test_thread.hpp"
+#include "display/write_table.hpp"
+#include "utils/sequence_type.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
