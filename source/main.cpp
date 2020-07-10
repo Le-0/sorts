@@ -32,7 +32,6 @@ int main(int argc, char** argv)
 
 	write_data("./data/"s);
 
-	/*
 	std::vector<std::thread> threads;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
 		for(auto size = 100; size <= 100000; size *= 10) {
@@ -48,7 +47,6 @@ int main(int argc, char** argv)
 	            thread.join();
 
 	write_table(sorts);
-	*/
 
 	return 0;
 }
