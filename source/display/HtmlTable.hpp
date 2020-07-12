@@ -23,6 +23,10 @@ public:
 	{
 		table.clear();
 	}
+	auto data()
+	{
+		return std::move(table);
+	}
 	friend std::ostream& operator<<(std::ostream& out, const HtmlTable& table)
 	{
 		out << "\n<table>\n<tr>\n";

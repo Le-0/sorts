@@ -9,11 +9,14 @@
 #include "benchmark/TimeTest.hpp"
 #include "benchmark/test_thread.hpp"
 #include "display/write_table.hpp"
+#include "display/draw_graphic.hpp"
 #include "utils/sequence_type.hpp"
 #include "test_data/write_data.hpp"
 
 using testing_signature = std::function<void(std::vector<int>::iterator, std::vector<int>::iterator)>;
 using namespace std::literals;
+
+#include <iostream>
 
 int main(int argc, char** argv)
 {
@@ -30,6 +33,7 @@ int main(int argc, char** argv)
 	sorts[9] = { lsd_sort<std::vector<int>::iterator>, "lsd_sort"s };
 	sorts[10] = { bitonic_sort<std::vector<int>::iterator>, "bitonic_sort"s };
 
+	/*
 	write_data("./data/"s);
 
 	std::vector<std::thread> threads;
@@ -45,8 +49,8 @@ int main(int argc, char** argv)
 	for(auto & thread : threads)
 		if(thread.joinable())
 	            thread.join();
-
-	write_table(sorts);
+	*/
+	draw_graphic(write_table(sorts));
 
 	return 0;
 }

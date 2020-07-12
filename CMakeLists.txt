@@ -8,7 +8,8 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 set(SOURCE ./source/main.cpp ./source/sorts/sorts.hpp ./source/benchmark/TimeTest.hpp ./source/benchmark/test_thread.hpp
-	./source/display/HtmlTable.hpp ./source/display/write_table.hpp ./source/utils/getCPUTime.h ./source/utils/sequence_type.hpp)
+	./source/display/HtmlTable.hpp ./source/display/write_table.hpp ./source/display/draw_graphic.hpp
+       	./source/utils/getCPUTime.h ./source/utils/sequence_type.hpp)
 set(SORTS ./source/sorts/bitonic_sort.hpp ./source/sorts/bubble_sort.hpp
 	./source/sorts/comb_sort.hpp ./source/sorts/gnome_sort.hpp
 	./source/sorts/insertion_sort.hpp ./source/sorts/lsd_sort.hpp

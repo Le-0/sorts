@@ -6,6 +6,7 @@
 #include <tuple>
 #include <array>
 #include <functional>
+#include <cmath>
 
 #include "HtmlTable.hpp"
 
@@ -33,12 +34,13 @@ const std::string head{"<!DOCTYPE html>\
 const std::string bottom{"</body>\
 </html>"};
 
-void write_table(const std::array<std::tuple<testing_signature, std::string>, 11>& sorts)
+auto write_table(const std::array<std::tuple<testing_signature, std::string>, 11>& sorts)
 {
 	std::ofstream out{"table.html"};
 	out << head << std::endl;
 
 	HtmlTable table(5, sorts.size() + 1);
+	std::array<std::vector<std::vector<std::string>>, static_cast<size_t>(sequence_type::reversed) + 1> tables;
 	for(int type = static_cast<int>(sequence_type::random); type <= static_cast<int>(sequence_type::reversed); ++type) {
 		out << "<h2>" << seqttos(static_cast<sequence_type>(type)) << "</h2>";
 		table.add_column(std::vector<std::string>{"name"s, "100"s, "1000"s, "10000"s, "100000"s});
@@ -52,13 +54,15 @@ void write_table(const std::array<std::tuple<testing_signature, std::string>, 11
 					std::getline(in, str);
 				if(str.empty())
 					str = "-"s;
-				column[i] = str;	
+				column[i] = std::to_string(std::lround(std::stod(str)));	
 			}
 			table.add_column(std::move(column));
 		}
 		out << table;
+		tables[type] = table.data();
 		table.clear();
 	}
 
 	out << bottom << std::endl;
+	return tables;
 }
